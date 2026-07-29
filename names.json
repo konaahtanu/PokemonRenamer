@@ -1,5 +1,6 @@
 {
-    "01": "Kalos, paikka jossa unelmat ja seikkailut alkavat",
+    "17": {
+          "01": "Kalos, paikka jossa unelmat ja seikkailut alkavat",
     "02": "Takaa-ajo Lumiose Cityssä",
     "03": "Kamppailu ilmaherruudesta",
     "04": "Yllättävän nenäkäs ystävyys",
@@ -48,4 +49,70 @@
     "47": "Unelma esiintymisestä!",
     "48": "Koulumuistoja!",
     "49": "Puolustaja Bonnie!"
+    },
+
+    "18": {
+        {
+    "01": "Polkuja esityskumppanuuteen!",
+    "02": "Kun valo ja pimeys kohtaavat!",
+    "03": "Ninja-haaste!",
+    "04": "Kilpailu kotiinpaluusta!",
+    "05": "Suurta suunnitelmaa vastaan!",
+    "06": "Liukas kohtaaminen!",
+    "07": "Goomyn puolesta!",
+    "08": "Jäisen paniikin sulattelua!",
+    "09": "Coumarine Cityn ruohotyypit!",
+    "10": "Valapuun alla!",
+    "11": "Esittelydebyytti!",
+    "12": "Toivon keidas!",
+    "13": "Tulevaisuus on nyt, kiitos päättäväisyyden!",
+    "14": "Risteyksessä! Tiet eroavat!",
+    "15": "Eleganttia ottelua hymyssä suin!",
+    "16": "Hyviä ystäviä, huippuharjoittelua!",
+    "17": "Pimeyttä vastaan!",
+    "18": "Lumiose – Totuuden hetki!",
+    "19": "Garchompin megayhteys!",
+    "20": "Kotiseutua puolustamassa!",
+    "21": "Sateenkaaren tuolla puolen!",
+    "22": "Sinullako muka huono päivä!",
+    "23": "Pelottavaa vieraanvaraisuutta!",
+    "24": "Muodikas ottelu!",
+    "25": "Keijutyypin keppostelua!",
+    "26": "Kilpailijoita nyt ja tulevaisuudessa!",
+    "27": "Ei niin lentävä lähtö!",
+    "28": "Viestikisa taivaalla!",
+    "29": "Valot! Kamera! Pika!",
+    "30": "Täyden tohinan tehdasvierailu!",
+    "31": "Tulisen taitavaa esiintymistä!",
+    "32": "Rotomin toive!",
+    "33": "Festivaalivaihtokauppa! Festivaalihyvästit!",
+    "34": "Lumivuoren yli!",
+    "35": "Sulakkeista seikkailuun!",
+    "36": "Särkynyttä sydäntä korjaamassa!",
+    "37": "Legendaarinen kuvauskohde!",
+    "38": "Pieni huolenpitäjä!",
+    "39": "Matkalla muistoihin!",
+    "40": "Ilakointia kukkakedolla!",
+    "41": "Tag-otteluinnostus!",
+    "42": "Esitysvisa!",
+    "43": "Pilvinen kohtalo, kirkas tulevaisuus!",
+    "44": "Katseet kohti tulevaa!"
+
+    },
+
+    "19": {
+        "01": "..."
+    },
+
+    "20": {
+        "01": "..."
+    },
+
+    "21": {
+        "01": "..."
+    },
+
+    "22": {
+        "01": "..."
+    }
 }
