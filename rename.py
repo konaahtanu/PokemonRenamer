@@ -3,6 +3,7 @@ import re
 from pathlib import Path
 
 VIDEO_EXTENSIONS = {".mkv", ".mp4", ".avi"}
+BAD_CHARS = {"�", "├", "Â", "Ã"}
 
 
 def load_names():
@@ -10,83 +11,101 @@ def load_names():
         return json.load(f)
 
 
-def is_video(file: Path):
+def normalize_title(title: str) -> str:
+    """Poistaa välimerkit ja ylimääräiset välilyönnit vertailua varten."""
+    title = re.sub(r"[!?.,:;\"']", "", title)
+    title = re.sub(r"\s+", " ", title)
+    return title.strip().lower()
+
+
+def is_video(file: Path) -> bool:
     return file.suffix.lower() in VIDEO_EXTENSIONS
 
 
-def has_bad_chars(text):
-    bad = ["�", "├", "Â", "Ã"]
-    return any(ch in text for ch in bad)
+def has_bad_chars(text: str) -> bool:
+    return any(ch in text for ch in BAD_CHARS)
+
+
+def build_lookup(names):
+    lookup = {}
+    for eng, fin in names.items():
+        lookup[normalize_title(eng)] = fin
+    return lookup
 
 
 def rename_files(folder: Path):
     names = load_names()
+    lookup = build_lookup(names)
 
     renamed = 0
     skipped = 0
-    bad_files = []
     missing = []
+    bad = []
 
     for file in folder.iterdir():
+
+        if not file.is_file():
+            continue
 
         if not is_video(file):
             continue
 
-        stem = file.stem
+        match = re.match(r"^(\d+)\s*-\s*(.+)$", file.stem)
 
-        m = re.match(r"^(\d+)\s*-\s*(.+)$", stem)
-
-        if not m:
+        if not match:
             skipped += 1
             continue
 
-        number = m.group(1)
-        english = m.group(2)
+        episode = match.group(1).zfill(2)
+        english = normalize_title(match.group(2))
 
-        if english not in names:
+        if english not in lookup:
             missing.append(file.name)
             continue
 
-        finnish = names[english]
+        finnish = lookup[english]
 
-        new_name = f"{number.zfill(2)} - {finnish}{file.suffix}"
+        if has_bad_chars(finnish):
+            bad.append(finnish)
 
-        if has_bad_chars(new_name):
-            bad_files.append(new_name)
+        new_file = folder / f"{episode} - {finnish}{file.suffix}"
 
-        target = folder / new_name
-
-        if target.exists():
+        if new_file.exists():
+            skipped += 1
             continue
 
-        file.rename(target)
+        file.rename(new_file)
         renamed += 1
 
     report = folder / "rename_report.txt"
 
     with open(report, "w", encoding="utf-8") as f:
+        f.write("PokemonRenamer raportti\n")
+        f.write("=" * 40 + "\n\n")
 
         f.write(f"Nimetty: {renamed}\n")
         f.write(f"Ohitettu: {skipped}\n\n")
 
-        f.write("Puuttuvat nimet:\n")
+        f.write("Ei löytynyt nimikartasta:\n")
+        if missing:
+            for item in missing:
+                f.write(f" - {item}\n")
+        else:
+            f.write(" Ei yhtään\n")
 
-        for item in missing:
-            f.write(item + "\n")
+        f.write("\nMahdollinen merkistövirhe:\n")
+        if bad:
+            for item in bad:
+                f.write(f" - {item}\n")
+        else:
+            f.write(" Ei yhtään\n")
 
-        f.write("\nEpäilyttävät nimet:\n")
-
-        for item in bad_files:
-            f.write(item + "\n")
-
-    print()
-    print("========================")
-    print("Valmis!")
-    print("========================")
-    print(f"Nimetty: {renamed}")
+    print("=" * 40)
+    print("PokemonRenamer")
+    print("=" * 40)
+    print(f"Nimetty : {renamed}")
     print(f"Ohitettu: {skipped}")
-    print("Raportti tallennettu:")
-    print(report)
+    print(f"Raportti: {report}")
 
 
 if __name__ == "__main__":
